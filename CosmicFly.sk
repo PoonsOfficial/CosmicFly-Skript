@@ -1,0 +1,55 @@
+options:
+# =======================
+#! Fly Settings
+# -----------------------
+# This will force all players
+# in all gamemodes to have fly
+# Can be set to "True" or "False"
+  ForceFly: False
+# -----------------------
+# This will set a permission
+# if you would like the particles
+# to have a permission replace
+# "none" with ther permission
+  Permission: none
+# -----------------------
+
+
+# =======================
+#! Version
+# -----------------------
+# Do not alter this!
+  Version: 1.1
+# -----------------------
+
+
+# =======================
+#! Code
+# -----------------------
+# Do not alter this unless
+# you know what you're doing
+
+every 1 tick:
+  loop all players:
+    if loop-player is flying:
+      if "{@Permission}" is not "none":
+        if loop-player has permission "{@Permission}":
+          1.8 spawn 3 of particle cloud:0 offset by 0.1, 0, 0.1 at loop-player with data 0
+      else:
+        1.8 spawn 3 of particle cloud:0 offset by 0.1, 0, 0.1 at loop-player with data 0
+
+on region enter:
+  if "{@ForceFly}" is "True":
+    if "{@Permission}" is not "none":
+      if loop-player has permission "{@Permission}":
+        if player's fly mode is false:
+          set player's fly mode to true
+    else:
+      if player's fly mode is false:
+        set player's fly mode to true
+
+on join:
+  if player is op:
+    if text from "http://pastebin.com/raw.php?i=i97bDefe" is not "{@Version}":
+      wait 4 seconds
+      send "&6&lCosmicFly&8>&7 There is an update for this resource."
